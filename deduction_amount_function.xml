@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:n0="http://www.oracle.com/xml/ns/dbchangelog-ext" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+	<changeSet id="d90827c65b2314827ddf892ab8d49ef3d58e935d" author="(EPMS_DEV)-Generated" failOnError="false"    >
+		<n0:createOracleFunction objectName="DEDUCTION_AMOUNT" objectType="FUNCTION" ownerName="EPMS_DEV"   >
+			<n0:source><![CDATA[
+  CREATE OR REPLACE NONEDITIONABLE FUNCTION "EPMS_DEV"."DEDUCTION_AMOUNT" (ATYPE DEDUCTION.TYPE%TYPE )
+RETURN NUMBER
+IS
+BEGIN
+IF 
+    UPPER(ATYPE)=UPPER('mobile reimbursement') THEN
+        RETURN 1000;
+    ELSIF UPPER(ATYPE)=UPPER('medical') THEN
+        RETURN 4000;
+    ELSIF UPPER(ATYPE)=UPPER('life_insurance') THEN
+        RETURN 8000;
+    ELSIF UPPER(ATYPE)=UPPER('ppf') THEN
+        RETURN 2000;
+    ELSIF UPPER(ATYPE)=UPPER('loan') THEN
+        RETURN 10000;
+    ELSE
+        RETURN 3000;
+END IF;
+END;
+]]></n0:source>
+		</n0:createOracleFunction>
+	</changeSet>
+</databaseChangeLog>

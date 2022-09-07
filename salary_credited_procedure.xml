@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:n0="http://www.oracle.com/xml/ns/dbchangelog-ext" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+	<changeSet id="59c8b3d45800437cdb41e8b396bf24fcfc4cebb1" author="(EPMS_DEV)-Generated" failOnError="false"    >
+		<n0:createOracleProcedure objectName="SALARY_CREDITED" objectType="PROCEDURE" ownerName="EPMS_DEV"   >
+			<n0:source><![CDATA[
+  CREATE OR REPLACE NONEDITIONABLE PROCEDURE "EPMS_DEV"."SALARY_CREDITED" 
+is 
+CURSOR cur is select e.empid, basic_salary,bonus,band_pf,allow_amount,loan_deducted_amt,leave_deducted_amount,bd.acc_no 
+from band b inner join employee e on e.bandid = b.bandid left join employee_allowance ea on ea.empid = e.empid 
+left join employee_deduction ed on ed.empid = e.empid 
+left join timesheet t on e.empid = t.empid
+inner join bank_details bd on bd.employee_empid = e.empid;
+var_net_salary payroll.emp_net_salary%type;
+cc cur%rowtype;
+BEGIN
+open cur;
+loop
+fetch cur into cc;
+exit when cur%notfound;
+var_net_salary := cc.basic_salary + cc.bonus + nvl(cc.allow_amount,0) - (cc.band_pf + nvl(cc.loan_deducted_amt,0) + nvl(cc.leave_deducted_amount,0));
+if extract(day from sysdate)= 30 then 
+Insert into payroll values (payid.nextval,cc.empid,var_net_salary,TO_date(sysdate,'DD-MM-YYYY'),cc.acc_no);
+END if;
+END LOOP;
+dbms_output.put_line('Salary Credited...');
+CLOSE cur;
+END;
+
+
+
+]]></n0:source>
+		</n0:createOracleProcedure>
+	</changeSet>
+</databaseChangeLog>

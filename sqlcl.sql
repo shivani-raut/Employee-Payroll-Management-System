@@ -1,0 +1,2 @@
+lb genschema;
+exit;

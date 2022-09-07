@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:n0="http://www.oracle.com/xml/ns/dbchangelog-ext" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+	<changeSet id="797bfbed4460578f898e1cf78f96f2b657bdc3ef" author="(EPMS_DEV)-Generated" failOnError="false"    >
+		<n0:createOracleProcedure objectName="LEAVE_APPLY" objectType="PROCEDURE" ownerName="EPMS_DEV"   >
+			<n0:source><![CDATA[
+  CREATE OR REPLACE NONEDITIONABLE PROCEDURE "EPMS_DEV"."LEAVE_APPLY" 
+(employeeid in employee.empid%type,leavestartdate in timesheet.LEAVE_START_DATE%type,leaveenddate in timesheet.LEAVE_END_DATE%type ,typeofleave in timesheet.TYPE_OF_LEAVE%type)
+is
+leaveamt timesheet.LEAVE_DEDUCTED_AMOUNT%type;
+BEGIN
+if typeofleave='%casual%' and to_date(leaveenddate,'dd-mm-yyyy') - to_date(leavestartdate,'dd-mm-yyyy') >10 then 
+leaveamt := 200;
+elsif typeofleave='%casual%' and to_date(leaveenddate,'dd-mm-yyyy') - to_date(leavestartdate,'dd-mm-yyyy') <10 then 
+leaveamt := 0;
+else  
+leaveamt := 0;
+end if;
+insert into timesheet values(sqle.nextval,employeeid,leavestartdate,leaveenddate,typeofleave,leaveamt);
+END;
+]]></n0:source>
+		</n0:createOracleProcedure>
+	</changeSet>
+</databaseChangeLog>

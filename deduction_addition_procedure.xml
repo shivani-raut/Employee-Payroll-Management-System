@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:n0="http://www.oracle.com/xml/ns/dbchangelog-ext" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+	<changeSet id="8ef3d2ad8629b09c1eebba676c7c120f21741449" author="(EPMS_DEV)-Generated" failOnError="false"    >
+		<n0:createOracleProcedure objectName="DEDUCTION_ADDITION" objectType="PROCEDURE" ownerName="EPMS_DEV"   >
+			<n0:source><![CDATA[
+  CREATE OR REPLACE NONEDITIONABLE PROCEDURE "EPMS_DEV"."DEDUCTION_ADDITION" 
+(empid in EMPLOYEE.EMPID%TYPE,ATYPE in DEDUCTION.TYPE%TYPE)
+IS
+    CURSOR  Cur IS SELECT TYPE FROM DEDUCTION ;
+    VAR CUR%ROWTYPE;
+    D_AMOUNT employee_deduction.loan_deducted_amt%TYPE;
+    DED_ID DEDUCTION.DEDUCTID%TYPE;
+
+BEGIN
+    OPEN CUR;
+    LOOP
+    FETCH CUR INTO VAR;
+    EXIT WHEN CUR%NOTFOUND;
+     dbms_output.put_line(VAR.TYPE);
+    END LOOP;
+    CLOSE CUR;
+    SELECT DEDUCTID INTO DED_ID FROM DEDUCTION WHERE TYPE =ATYPE ;
+    D_AMOUNT := DEDUCTION_AMOUNT(ATYPE);
+    INSERT INTO  employee_deduction VALUES(EMPID,DED_ID,D_AMOUNT);
+END;
+]]></n0:source>
+		</n0:createOracleProcedure>
+	</changeSet>
+</databaseChangeLog>

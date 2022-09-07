@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:n0="http://www.oracle.com/xml/ns/dbchangelog-ext" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+	<changeSet id="b334f3fd2a4aa8d26c98abba6e2e4d585a5b9ed3" author="(EPMS_DEV)-Generated" failOnError="false"    >
+		<n0:createOracleFunction objectName="ALLOWANCE_AMOUNT" objectType="FUNCTION" ownerName="EPMS_DEV"   >
+			<n0:source><![CDATA[
+  CREATE OR REPLACE NONEDITIONABLE FUNCTION "EPMS_DEV"."ALLOWANCE_AMOUNT" (ATYPE ALLOWANCES.TYPE%TYPE )
+RETURN NUMBER
+IS
+BEGIN
+IF UPPER(ATYPE)=UPPER('MEDICAL') THEN
+RETURN 3000;
+ELSIF 
+UPPER(ATYPE)=UPPER('house_rent') THEN
+RETURN 5000;
+ELSIF 
+UPPER(ATYPE)=UPPER('overtime') THEN
+RETURN 6000;
+ELSIF 
+UPPER(ATYPE)=UPPER('special_allowance') THEN
+RETURN 2000;
+ELSIF 
+UPPER(ATYPE)=UPPER('meal') THEN
+RETURN 4000;
+ELSE
+RETURN 3000;
+END IF;
+END;]]></n0:source>
+		</n0:createOracleFunction>
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <include file="payid_sequence.xml"/> 
+  <include file="sqle_sequence.xml"/> 
+  <include file="band_table.xml"/> 
+  <include file="deduction_table.xml"/> 
+  <include file="allowances_table.xml"/> 
+  <include file="department_table.xml"/> 
+  <include file="location_table.xml"/> 
+  <include file="employee_table.xml"/> 
+  <include file="login_table.xml"/> 
+  <include file="timesheet_table.xml"/> 
+  <include file="bank_details_table.xml"/> 
+  <include file="employee_allowance_table.xml"/> 
+  <include file="employee_deduction_table.xml"/> 
+  <include file="payroll_table.xml"/> 
+  <include file="deduction_amount_function.xml"/> 
+  <include file="allowance_amount_function.xml"/> 
+  <include file="deduction_addition_procedure.xml"/> 
+  <include file="edit_bank_details_procedure.xml"/> 
+  <include file="salary_credited_procedure.xml"/> 
+  <include file="leave_apply_procedure.xml"/> 
+  <include file="allowances_addition_procedure.xml"/> 
+  <include file="login_procedure_procedure.xml"/> 
+  <include file="view_payslip_procedure.xml"/> 
+  <include file="login__un_index.xml"/> 
+  <include file="employee__un_index.xml"/> 
+</databaseChangeLog> 
